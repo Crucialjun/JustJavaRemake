@@ -24,10 +24,9 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        int price = quantity * 5;
-        String priceMessage = "Total: Ksh" + price;
-        priceMessage = priceMessage + "\nThank you!";
-        displayMessage(priceMessage);
+        int price = calculatePrice();
+        String orderSummary = createOrderSummary(price);
+        displayMessage(orderSummary);
         
     }
 
@@ -66,7 +65,20 @@ public class MainActivity extends AppCompatActivity {
      * This method displays the given text on the screen.
      */
     private void displayMessage(String message) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
+        TextView priceTextView = findViewById(R.id.price_text_view);
         priceTextView.setText(message);
+    }
+
+    private int calculatePrice() {
+        return quantity * 5;
+    }
+
+    private String createOrderSummary(int price) {
+        String summary = "Name: Kaptain Kunal";
+        summary = summary + "\nQuantity: " + quantity;
+        summary = summary + "\nTotal: Ksh" + price;
+        summary = summary + "\nThank you!";
+        return summary;
+
     }
 }
