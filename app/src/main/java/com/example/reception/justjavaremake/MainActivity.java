@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         int price = calculatePrice();
         String orderSummary = createOrderSummary(price);
         displayMessage(orderSummary);
-        
+
     }
 
     /**
@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
      * This method displays the given text on the screen.
      */
     private void displayMessage(String message) {
-        TextView orderSummmaryTextView = findViewById(R.id.order_summary_text_view);
-        orderSummmaryTextView.setText(message);
+        TextView orderSummaryTextView = findViewById(R.id.order_summary_text_view);
+        orderSummaryTextView.setText(message);
     }
 
     private int calculatePrice() {
