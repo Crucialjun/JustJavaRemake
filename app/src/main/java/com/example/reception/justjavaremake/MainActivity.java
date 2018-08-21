@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         CheckBox chocolateCheckBox = findViewById(R.id.chocolate);
         boolean hasChocolate = chocolateCheckBox.isChecked();
         boolean hasWhippedCream = whippedCream.isChecked();
-        int price = calculatePrice();
+        int price = calculatePrice(hasWhippedCream, hasChocolate);
         String orderSummary = createOrderSummary(price,hasWhippedCream,hasChocolate);
         displayMessage(orderSummary);
 
@@ -67,8 +67,16 @@ public class MainActivity extends AppCompatActivity {
         orderSummaryTextView.setText(message);
     }
 
-    private int calculatePrice() {
-        return quantity * 5;
+    private int calculatePrice(boolean whippedCream, boolean chocolate) {
+        int price = 5;
+
+        if (whippedCream) {
+            price = price + 1;
+        }
+        if (chocolate) {
+            price = price + 2;
+        }
+        return quantity * price;
     }
 
 
