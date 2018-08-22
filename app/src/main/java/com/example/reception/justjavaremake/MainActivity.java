@@ -1,5 +1,7 @@
 package com.example.reception.justjavaremake;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,8 +32,17 @@ public class MainActivity extends AppCompatActivity {
         boolean hasChocolate = chocolateCheckBox.isChecked();
         boolean hasWhippedCream = whippedCream.isChecked();
         int price = calculatePrice(hasWhippedCream, hasChocolate);
-        String orderSummary = createOrderSummary(price,hasWhippedCream,hasChocolate);
-        displayMessage(orderSummary);
+        String orderSummary = createOrderSummary(price, hasWhippedCream, hasChocolate);
+        Intent mailOrder = new Intent(Intent.ACTION_SENDTO);
+        mailOrder.setData(Uri.parse("mailto:"));
+        mailOrder.putExtra(Intent.EXTRA_SUBJECT, "Just Java Order for " + getUserName());
+        mailOrder.putExtra(Intent.EXTRA_TEXT, orderSummary);
+
+
+        if (mailOrder.resolveActivity(getPackageManager()) != null) {
+            startActivity(mailOrder);
+        }
+
 
     }
 
@@ -74,14 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * This method displays the given text on the screen.
-     */
-    private void displayMessage(String message) {
-        TextView orderSummaryTextView = findViewById(R.id.order_summary_text_view);
-        orderSummaryTextView.setText(message);
-    }
-
     private int calculatePrice(boolean whippedCream, boolean chocolate) {
         int price = 5;
 
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String createOrderSummary(int price, boolean addWhippCream,boolean addChocolate) {
+    private String createOrderSummary(int price, boolean addWhippCream, boolean addChocolate) {
         String summary = "Name: " + getUserName();
         summary += "\nAdd whipped cream? " + addWhippCream;
         summary += "\nAdd chocolate? " + addChocolate;
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         return summary;
     }
 
-    private String getUserName() {
+    public String getUserName() {
         EditText userName = findViewById(R.id.userName);
         return userName.getText().toString();
     }
